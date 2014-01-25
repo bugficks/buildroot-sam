@@ -13,16 +13,16 @@ if BR2_PACKAGE_BUSYBOX
 
 choice
 	prompt "BusyBox Version"
-	default BR2_BUSYBOX_VERSION_1_21_X if !BR2_arm_echo
-	default BR2_BUSYBOX_VERSION_1_18_1_SAM if BR2_arm_echo
-	default BR2_BUSYBOX_VERSION_1_18_1_SAM if BR2_arm_genoa
+	default BR2_BUSYBOX_VERSION_1_21_X if !BR2_arm_echo && !BR2_arm_genoa && !BR2_arm_foxp && !BR2_arm_foxb && !BR2_arm_mst12
+	default BR2_BUSYBOX_VERSION_1_18_1_SAM if BR2_arm_echo || BR2_arm_genoa
+	default BR2_BUSYBOX_VERSION_1_19_4_SAM if BR2_arm_foxp || BR2_arm_foxb || BR2_arm_mst12
 	help
 	  Select the version of BusyBox you wish to use.
 
 	config BR2_BUSYBOX_VERSION_1_18_1_SAM
 		bool "BusyBox 1.18.1 Samsung Relase"
-		depends on BR2_arm_echo
-
+		depends on BR2_arm_echo || BR2_arm_genoa
+		
 	config BR2_BUSYBOX_VERSION_1_19_4_SAM
 		bool "BusyBox 1.19.4  Samsung Relase"
 		depends on BR2_arm_echo || BR2_arm_foxp || BR2_arm_foxb || BR2_arm_mst12
