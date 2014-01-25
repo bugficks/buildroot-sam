@@ -876,7 +876,7 @@ endchoice
 config BR2_TOOLCHAIN_EXTERNAL_PATH
 	string "Toolchain path"
 	default "/opt/VDLinux-arm-v7a15v3r1"	 if BR2_TOOLCHAIN_EXTERNAL_FOXP
-	default "/opt/VDLinux-arm-v7a9v3r1"	 if BR2_TOOLCHAIN_EXTERNAL_FOXB
+	default "/opt/VDLinux-arm-v7a8v3r1"	 if BR2_TOOLCHAIN_EXTERNAL_FOXB || BR2_TOOLCHAIN_EXTERNAL_MST12
 	default "/opt/VDLinux-armv7a8v2r2"	 if BR2_TOOLCHAIN_EXTERNAL_ECHO
 	default "/opt/VDLinux-armv7a8"	 if BR2_TOOLCHAIN_EXTERNAL_GENOA
 	depends on BR2_TOOLCHAIN_EXTERNAL_PREINSTALLED
@@ -897,8 +897,8 @@ config BR2_TOOLCHAIN_EXTERNAL_CUSTOM_PREFIX
 config BR2_TOOLCHAIN_EXTERNAL_PREFIX
 	string
 	default "arm-v7a15v3r1-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_FOXP
-	default "arm-v7a9v3r1-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_FOXB
-	default "arm-v7a8-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_GENOA
+	default "arm-v7a8v3r1-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_FOXB
+	default "arm-v7a8v3r1-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_GENOA
 	default "arm-v7a8v2r2-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_ECHO
 	default "arm-linux-gnueabihf"	 if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_09
 	default "arm-linux-gnueabihf"	 if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_08
