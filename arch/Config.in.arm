@@ -45,6 +45,7 @@ choice
 config BR2_arm_foxp
 	bool "ARM FoxP"
 	select BR2_TOOLCHAIN_EXTERNAL
+	select BR2_TOOLCHAIN_EXTERNAL_FOXP
 	
 config BR2_arm_foxb
 	bool "ARM FoxB"

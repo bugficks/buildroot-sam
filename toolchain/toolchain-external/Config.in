@@ -898,7 +898,7 @@ config BR2_TOOLCHAIN_EXTERNAL_PREFIX
 	string
 	default "arm-v7a15v3r1-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_FOXP
 	default "arm-v7a8v3r1-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_FOXB
-	default "arm-v7a8v3r1-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_GENOA
+	default "arm-v7a8-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_GENOA
 	default "arm-v7a8v2r2-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_ECHO
 	default "arm-linux-gnueabihf"	 if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_09
 	default "arm-linux-gnueabihf"	 if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_08
