@@ -4,7 +4,7 @@ choice
 	prompt "Toolchain"
 	default BR2_TOOLCHAIN_EXTERNAL_GENOA if BR2_arm_genoa
 	default BR2_TOOLCHAIN_EXTERNAL_ECHO if BR2_arm_echo
-	default BR2_TOOLCHAIN_EXTERNAL_FOXB if BR2_arm_foxb
+	default BR2_TOOLCHAIN_EXTERNAL_FOXB if BR2_arm_foxb || BR2_arm_mst12
 	default BR2_TOOLCHAIN_EXTERNAL_FOXP if BR2_arm_foxp
 comment "(e)glibc toolchains only available with shared lib support"
 	depends on BR2_PREFER_STATIC_LIB
@@ -37,7 +37,7 @@ config BR2_TOOLCHAIN_EXTERNAL_ECHO
 	  To use this toolchain, you must disable soft float usage.
 
 config BR2_TOOLCHAIN_EXTERNAL_FOXB
-	bool "Samsung FoxB Toolchain"
+	bool "Samsung FoxB/MST12 Toolchain"
 	depends on BR2_arm
 	select BR2_TOOLCHAIN_EXTERNAL_GLIBC
 	select BR2_LARGEFILE

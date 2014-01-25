@@ -25,7 +25,8 @@ choice
 
 	config BR2_BUSYBOX_VERSION_1_19_4_SAM
 		bool "BusyBox 1.19.4  Samsung Relase"
-				
+		depends on BR2_arm_echo || BR2_arm_foxp || BR2_arm_foxb || BR2_arm_mst12
+	
 	config BR2_BUSYBOX_VERSION_1_19_X
 		bool "BusyBox 1.19.x"
 

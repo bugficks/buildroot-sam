@@ -43,26 +43,30 @@ choice
 	default BR2_arm_foxp
 
 config BR2_arm_foxp
-	bool "ARM FoxP"
+	bool "Samsung FoxP Platform"
 	select BR2_TOOLCHAIN_EXTERNAL
 	select BR2_TOOLCHAIN_EXTERNAL_FOXP
 	
 config BR2_arm_foxb
-	bool "ARM FoxB"
+	bool "Samsung FoxB Platform"
 	select BR2_TOOLCHAIN_EXTERNAL
-	
+
+config BR2_arm_mst12
+	bool "Samsung MST12 Platform"
+	select BR2_TOOLCHAIN_EXTERNAL
+		
 config BR2_arm_echo
-	bool "ARM EchoP"
+	bool "Samsung EchoP Platform"
 	select BR2_TOOLCHAIN_EXTERNAL
 	select BR2_TOOLCHAIN_EXTERNAL_ECHO
 	
 config BR2_arm_genoa
-	bool "ARM GenoaP"
+	bool "Samsung GenoaP Platform"
 	select BR2_TOOLCHAIN_EXTERNAL
 	select BR2_TOOLCHAIN_EXTERNAL_GENOA
 
 config BR2_arm_no_samsung
-	bool "Not a Samsung Device"
+	bool "Not a Samsung Platform"
 
 endchoice
 
@@ -70,8 +74,7 @@ choice
 	prompt "Target Architecture Variant"
 	depends on BR2_arm || BR2_armeb
 	default BR2_cortex_a15 if BR2_arm_foxp
-	default BR2_cortex_a9 if BR2_arm_foxb
-	default BR2_cortex_a8 if BR2_arm_echo || BR2_arm_genoa
+	default BR2_cortex_a8 if BR2_arm_foxb || BR2_arm_mst12 ||BR2_arm_echo || BR2_arm_genoa 
 	help
 	  Specific CPU variant to use
 
@@ -219,7 +222,8 @@ choice
 	prompt "Floating point strategy"
 	depends on BR2_ARM_EABI || BR2_ARM_EABIHF
 	default BR2_ARM_FPU_VFPV4D16 if BR2_ARM_CPU_HAS_VFPV4
-	default BR2_ARM_FPU_VFPV3D16 if BR2_ARM_CPU_HAS_VFPV3
+	default BR2_ARM_FPU_VFPV3D16 if BR2_ARM_CPU_HAS_VFPV3 && !BR2_arm_echo && !BR2_arm_genoa
+	default BR2_ARM_FPU_VFPV3 if BR2_arm_echo || BR2_arm_genoa
 	default BR2_ARM_FPU_VFPV2 if BR2_ARM_CPU_HAS_VFPV2
 	default BR2_ARM_SOFT_FLOAT if !BR2_ARM_CPU_HAS_VFPV2
 
