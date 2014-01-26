@@ -876,9 +876,9 @@ endchoice
 config BR2_TOOLCHAIN_EXTERNAL_PATH
 	string "Toolchain path"
 	default "/opt/VDLinux-arm-v7a15v3r1"	 if BR2_TOOLCHAIN_EXTERNAL_FOXP
-	default "/opt/VDLinux-arm-v7a8v3r1"	 if BR2_TOOLCHAIN_EXTERNAL_FOXB || BR2_TOOLCHAIN_EXTERNAL_MST12
-	default "/opt/VDLinux-armv7a8v2r2"	 if BR2_TOOLCHAIN_EXTERNAL_ECHO
-	default "/opt/VDLinux-armv7a8"	 if BR2_TOOLCHAIN_EXTERNAL_GENOA
+	default "/opt/VDLinux-arm-v7a8v3r1"		 if BR2_TOOLCHAIN_EXTERNAL_FOXB || BR2_TOOLCHAIN_EXTERNAL_MST12
+	default "/opt/VDLinux-armv7a8v2r2"		 if BR2_TOOLCHAIN_EXTERNAL_ECHO
+	default "/opt/VDLinux-armv7a8"			 if BR2_TOOLCHAIN_EXTERNAL_GENOA
 	depends on BR2_TOOLCHAIN_EXTERNAL_PREINSTALLED
 	help
 	  Path to where the external toolchain is installed.
@@ -891,14 +891,18 @@ config BR2_TOOLCHAIN_EXTERNAL_URL
 
 config BR2_TOOLCHAIN_EXTERNAL_CUSTOM_PREFIX
 	string "Toolchain prefix"
-	depends on BR2_TOOLCHAIN_EXTERNAL_CUSTOM
-	default "$(ARCH)-linux"
-
+	depends on BR2_TOOLCHAIN_EXTERNAL_CUSTOM || BR2_TOOLCHAIN_EXTERNAL_PREINSTALLED
+	default "$(ARCH)-linux" if BR2_arm_no_samsung
+	default "arm-v7a15v3r1-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_FOXP
+	default "arm-v7a8v3r1-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_FOXB
+	default "arm-v7a8-linux-gnueabi"			 if BR2_TOOLCHAIN_EXTERNAL_GENOA
+	default "arm-v7a8v2r2-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_ECHO
+	
 config BR2_TOOLCHAIN_EXTERNAL_PREFIX
 	string
 	default "arm-v7a15v3r1-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_FOXP
 	default "arm-v7a8v3r1-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_FOXB
-	default "arm-v7a8-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_GENOA
+	default "arm-v7a8-linux-gnueabi"	 		 if BR2_TOOLCHAIN_EXTERNAL_GENOA
 	default "arm-v7a8v2r2-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_ECHO
 	default "arm-linux-gnueabihf"	 if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_09
 	default "arm-linux-gnueabihf"	 if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_08
