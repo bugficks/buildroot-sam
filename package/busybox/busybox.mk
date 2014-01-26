@@ -211,6 +211,36 @@ define BUSYBOX_BUILD_CMDS
 	$(BUSYBOX_MAKE_ENV) $(MAKE) $(BUSYBOX_MAKE_OPTS) -C $(@D)
 endef
 
+ifeq ($(BR2_arm_foxp),y)
+define BUSYBOX_COPY_ROOTFS_FILES
+	cp -Rf package/busybox/files/foxp/* $(TARGET_DIR)
+endef
+endif
+
+ifeq ($(BR2_arm_foxp),y)
+define BUSYBOX_COPY_ROOTFS_FILES
+	cp -Rf package/busybox/files/foxp/* $(TARGET_DIR)
+endef
+endif
+
+ifeq ($(BR2_arm_mst12),y)
+define BUSYBOX_COPY_ROOTFS_FILES
+	cp -Rf package/busybox/files/mst12/* $(TARGET_DIR)/
+endef
+endif
+
+ifeq ($(BR2_arm_echo),y)
+define BUSYBOX_COPY_ROOTFS_FILES
+	cp -Rf package/busybox/files/echop/* $(TARGET_DIR)/
+endef
+endif
+
+ifeq ($(BR2_arm_genoa),y)
+define BUSYBOX_COPY_ROOTFS_FILES
+	cp -Rf package/busybox/files/genoa/* $(TARGET_DIR)/
+endef
+endif
+	
 define BUSYBOX_INSTALL_TARGET_CMDS
 	$(BUSYBOX_MAKE_ENV) $(MAKE) $(BUSYBOX_MAKE_OPTS) -C $(@D) install
 	if [ ! -f $(TARGET_DIR)/usr/share/udhcpc/default.script ]; then \
@@ -221,6 +251,7 @@ define BUSYBOX_INSTALL_TARGET_CMDS
 	$(BUSYBOX_INSTALL_MDEV_CONF)
 	$(BUSYBOX_INSTALL_LOGGING_SCRIPT)
 	$(BUSYBOX_INSTALL_WATCHDOG_SCRIPT)
+	$(BUSYBOX_COPY_ROOTFS_FILES)
 endef
 
 define BUSYBOX_UNINSTALL_TARGET_CMDS
