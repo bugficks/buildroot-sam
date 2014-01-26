@@ -1006,4 +1006,11 @@ source "package/vim/Config.in"
 endif
 endmenu
 
+
+if !BR2_arm_no_samsung
+menu "SamyGO tools"
+source "package/SamyGO/oscam/Config.in"
+endmenu
+endif
+
 endmenu

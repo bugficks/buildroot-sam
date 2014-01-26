@@ -52,7 +52,7 @@ ifeq ($(BR2_x86_i386),y)
 	OPENSSL_TARGET_ARCH = generic32 386
 endif
 
-define HOST_OPENSSL_CONFIGURE_CMDS
+define HOST_OPENSSL_CONFIGURE
 	(cd $(@D); \
 		$(HOST_CONFIGURE_OPTS) \
 		./config \
@@ -61,6 +61,7 @@ define HOST_OPENSSL_CONFIGURE_CMDS
 		--libdir=/lib \
 		shared \
 		no-zlib \
+		no-asm \
 	)
 endef
 
@@ -73,23 +74,31 @@ define OPENSSL_CONFIGURE_CMDS
 			--prefix=/usr \
 			--openssldir=/etc/ssl \
 			--libdir=/lib \
-			$(if $(BR2_TOOLCHAIN_HAS_THREADS),threads,no-threads) \
-			$(if $(BR2_PREFER_STATIC_LIB),no-shared,shared) \
-			no-idea \
+			no-asm \
+			no-camellia \
+			no-capieng \
+			no-cms \
+			no-gmp \
+			no-jpake \
+			no-krb5 \
+			no-mdc2 \
+			no-montasm \
 			no-rc5 \
-			enable-camellia \
-			enable-mdc2 \
-			enable-tlsext \
-			$(if $(BR2_PREFER_STATIC_LIB),zlib,zlib-dynamic) \
-			$(if $(BR2_PREFER_STATIC_LIB),no-dso) \
+			no-rfc3779 \
+			no-seed \
+			no-shared \
+			no-zlib \
+			no-zlib-dynamic \
+			no-asm \
 	)
 	$(SED) "s:-march=[-a-z0-9] ::" -e "s:-mcpu=[-a-z0-9] ::g" $(@D)/Makefile
 	$(SED) "s:-O[0-9]:$(OPENSSL_CFLAGS):" $(@D)/Makefile
 	$(SED) "s: build_tests::" $(@D)/Makefile
 endef
 
+
 define HOST_OPENSSL_BUILD_CMDS
-	$(MAKE1) -C $(@D)
+	$(MAKE1) -C $(@D) 
 endef
 
 define OPENSSL_BUILD_CMDS
