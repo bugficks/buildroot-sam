@@ -1009,6 +1009,7 @@ endmenu
 
 if !BR2_arm_no_samsung
 menu "SamyGO tools"
+source "package/ntpclient/Config.in"
 source "package/oscam/Config.in"
 source "package/samyGOso/Config.in"
 endmenu
