@@ -231,7 +231,7 @@ endif
 
 ifeq ($(BR2_arm_echo),y)
 define BUSYBOX_COPY_ROOTFS_FILES
-	cp -Rf package/busybox/files/echop/* $(TARGET_DIR)/
+	cp -Rf package/busybox/files/echo/* $(TARGET_DIR)/
 endef
 endif
 
