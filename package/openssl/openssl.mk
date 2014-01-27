@@ -74,22 +74,17 @@ define OPENSSL_CONFIGURE_CMDS
 			--prefix=/usr \
 			--openssldir=/etc/ssl \
 			--libdir=/lib \
+			shared \
 			no-asm \
 			no-camellia \
 			no-capieng \
 			no-cms \
-			no-gmp \
 			no-jpake \
 			no-krb5 \
-			no-mdc2 \
 			no-montasm \
-			no-rc5 \
 			no-rfc3779 \
-			no-seed \
-			no-shared \
 			no-zlib \
 			no-zlib-dynamic \
-			no-asm \
 	)
 	$(SED) "s:-march=[-a-z0-9] ::" -e "s:-mcpu=[-a-z0-9] ::g" $(@D)/Makefile
 	$(SED) "s:-O[0-9]:$(OPENSSL_CFLAGS):" $(@D)/Makefile
