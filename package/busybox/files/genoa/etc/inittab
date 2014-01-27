@@ -1,0 +1,5 @@
+ttyS3::sysinit:/etc/rc.local
+ttyS3::respawn:-/bin/sh
+::restart:/sbin/init
+::ctrlaltdel:/bin/umount -a -r
+

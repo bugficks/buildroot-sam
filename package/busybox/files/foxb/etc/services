@@ -1,0 +1,8 @@
+nfs             2049/tcp        nfsd shilp      # Network File System
+nfs             2049/udp        nfsd shilp      # Network File System
+nfs             2049/sctp       nfsd shilp      # Network File System
+nfsd             2049/tcp        nfsd shilp      # Network File System
+nfsd             2049/udp        nfsd shilp      # Network File System
+nfsd             2049/sctp       nfsd shilp      # Network File System
+rpcbind         111/tcp
+rpcbind         111/udp

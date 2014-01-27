@@ -1,0 +1,9 @@
+# /mtd_rwarea/hosts
+127.0.0.1       localhost
+192.168.1.200     infolink.pavv.co.kr
+# 192.168.1.200     devinfolink.pavv.co.kr
+#192.168.1.200     www.samsungotn.net
+# 192.168.1.200     test.samsungotn.net
+# 192.168.1.200     www.samsungrm.net
+# 192.168.1.200     test.samsungrm.net
+# end of hosts file
