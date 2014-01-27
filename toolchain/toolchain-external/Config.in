@@ -6,6 +6,9 @@ choice
 	default BR2_TOOLCHAIN_EXTERNAL_ECHO if BR2_arm_echo
 	default BR2_TOOLCHAIN_EXTERNAL_FOXB if BR2_arm_foxb || BR2_arm_mst12
 	default BR2_TOOLCHAIN_EXTERNAL_FOXP if BR2_arm_foxp
+	default BR2_TOOLCHAIN_EXTERNAL_VALENCIA if BR2_arm_valencia
+	default BR2_TOOLCHAIN_EXTERNAL_CHELSEA if BR2_arm_chelsea
+	
 comment "(e)glibc toolchains only available with shared lib support"
 	depends on BR2_PREFER_STATIC_LIB
 
@@ -63,6 +66,34 @@ config BR2_TOOLCHAIN_EXTERNAL_FOXP
 	help
 	  To use this toolchain, you must disable soft float usage.
 
+config BR2_TOOLCHAIN_EXTERNAL_VALENCIA
+	bool "Samsung Valencia Toolchain"
+	depends on BR2_arm
+	select BR2_TOOLCHAIN_EXTERNAL_GLIBC
+	select BR2_LARGEFILE
+	select BR2_TOOLCHAIN_HAS_NATIVE_RPC
+	select BR2_USE_WCHAR
+	select BR2_TOOLCHAIN_HAS_THREADS
+	select BR2_TOOLCHAIN_HAS_THREADS_DEBUG
+	select BR2_INSTALL_LIBSTDCPP
+	
+	help
+	  To use this toolchain, you must disable soft float usage.
+
+config BR2_TOOLCHAIN_EXTERNAL_CHELSEA
+	bool "Samsung Chelsea Toolchain"
+	depends on BR2_arm
+	select BR2_TOOLCHAIN_EXTERNAL_GLIBC
+	select BR2_LARGEFILE
+	select BR2_TOOLCHAIN_HAS_NATIVE_RPC
+	select BR2_USE_WCHAR
+	select BR2_TOOLCHAIN_HAS_THREADS
+	select BR2_TOOLCHAIN_HAS_THREADS_DEBUG
+	select BR2_INSTALL_LIBSTDCPP
+	
+	help
+	  To use this toolchain, you must disable soft float usage.
+	    
 config BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_09
 	bool "Linaro 2013.09"
 	depends on BR2_arm
@@ -879,6 +910,9 @@ config BR2_TOOLCHAIN_EXTERNAL_PATH
 	default "/opt/VDLinux-arm-v7a8v3r1"		 if BR2_TOOLCHAIN_EXTERNAL_FOXB || BR2_TOOLCHAIN_EXTERNAL_MST12
 	default "/opt/VDLinux-armv7a8v2r2"		 if BR2_TOOLCHAIN_EXTERNAL_ECHO
 	default "/opt/VDLinux-armv7a8"			 if BR2_TOOLCHAIN_EXTERNAL_GENOA
+	default "/opt/VDLinux-arm_v7_vfp"		 if BR2_TOOLCHAIN_EXTERNAL_VALENCIA
+	default "/opt/VDLinux-arm_v6_vfp"		 if BR2_TOOLCHAIN_EXTERNAL_CHELSEA
+		
 	depends on BR2_TOOLCHAIN_EXTERNAL_PREINSTALLED
 	help
 	  Path to where the external toolchain is installed.
@@ -897,13 +931,16 @@ config BR2_TOOLCHAIN_EXTERNAL_CUSTOM_PREFIX
 	default "arm-v7a8v3r1-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_FOXB
 	default "arm-v7a8-linux-gnueabi"			 if BR2_TOOLCHAIN_EXTERNAL_GENOA
 	default "arm-v7a8v2r2-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_ECHO
-	
+	default "arm_v7_vfp_le"				 		 if BR2_TOOLCHAIN_EXTERNAL_VALENCIA
+	default "arm_v5t_le"				 		 if BR2_TOOLCHAIN_EXTERNAL_CHELSEA
 config BR2_TOOLCHAIN_EXTERNAL_PREFIX
 	string
 	default "arm-v7a15v3r1-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_FOXP
 	default "arm-v7a8v3r1-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_FOXB
 	default "arm-v7a8-linux-gnueabi"	 		 if BR2_TOOLCHAIN_EXTERNAL_GENOA
 	default "arm-v7a8v2r2-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_ECHO
+	default "arm_v7_vfp_le"				 		 if BR2_TOOLCHAIN_EXTERNAL_VALENCIA
+	default "arm_v5t_le"				 		 if BR2_TOOLCHAIN_EXTERNAL_CHELSEA
 	default "arm-linux-gnueabihf"	 if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_09
 	default "arm-linux-gnueabihf"	 if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_08
 	default "arm-linux-gnueabihf"	 if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_07

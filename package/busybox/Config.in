@@ -13,9 +13,10 @@ if BR2_PACKAGE_BUSYBOX
 
 choice
 	prompt "BusyBox Version"
-	default BR2_BUSYBOX_VERSION_1_21_X if !BR2_arm_echo && !BR2_arm_genoa && !BR2_arm_foxp && !BR2_arm_foxb && !BR2_arm_mst12
+	default BR2_BUSYBOX_VERSION_1_21_X if !BR2_arm_echo && !BR2_arm_genoa && !BR2_arm_foxp && !BR2_arm_foxb && !BR2_arm_mst12 && !BR2_arm_chelsea
 	default BR2_BUSYBOX_VERSION_1_18_1_SAM if BR2_arm_echo || BR2_arm_genoa
 	default BR2_BUSYBOX_VERSION_1_19_4_SAM if BR2_arm_foxp || BR2_arm_foxb || BR2_arm_mst12
+	default BR2_BUSYBOX_VERSION_1_19_X if BR2_arm_chelsea
 	help
 	  Select the version of BusyBox you wish to use.
 

@@ -369,6 +369,18 @@ else ifeq ($(BR2_TOOLCHAIN_EXTERNAL_GENOA),y)
 TOOLCHAIN_EXTERNAL_SITE = http://downloads.sourceforge.net/project/samygo/Toolchains/
 TOOLCHAIN_EXTERNAL_SOURCE = VDLinux-armv7a8-toolchain-lite_20100630.tgz
 TOOLCHAIN_EXTERNAL_BIN := $(TOOLCHAIN_EXTERNAL_INSTALL_DIR)/VDLinux-armv7a8/bin
+
+else ifeq ($(BR2_TOOLCHAIN_EXTERNAL_VALENCIA),y)
+TOOLCHAIN_EXTERNAL_SITE = http://downloads.sourceforge.net/project/samygo/Toolchains/
+TOOLCHAIN_EXTERNAL_SOURCE = arm_v7_vfp_le_20091117.tgz
+TOOLCHAIN_EXTERNAL_BIN := $(TOOLCHAIN_EXTERNAL_INSTALL_DIR)/bin
+
+else ifeq ($(BR2_TOOLCHAIN_EXTERNAL_CHELSEA),y)
+TOOLCHAIN_EXTERNAL_SITE = http://downloads.sourceforge.net/project/samygo/Toolchains/
+TOOLCHAIN_EXTERNAL_SOURCE = arm_v5t_vfp_le.tar.gz
+TOOLCHAIN_EXTERNAL_BIN := $(TOOLCHAIN_EXTERNAL_INSTALL_DIR)/bin
+
+
 else
 # Custom toolchain
 TOOLCHAIN_EXTERNAL_SITE = $(dir $(call qstrip,$(BR2_TOOLCHAIN_EXTERNAL_URL)))

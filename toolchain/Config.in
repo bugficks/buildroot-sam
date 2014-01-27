@@ -26,7 +26,7 @@ config BR2_TOOLCHAIN_USES_MUSL
 
 choice
 	prompt "Toolchain type"
-	default BR2_TOOLCHAIN_EXTERNAL if  BR2_arm_foxp ||  BR2_arm_foxb || BR2_arm_echo || BR2_arm_genoa || BR2_arm_mst12
+	default BR2_TOOLCHAIN_EXTERNAL if  BR2_arm_foxp ||  BR2_arm_foxb || BR2_arm_echo || BR2_arm_genoa || BR2_arm_mst12 || BR2_arm_valencia || BR2_arm_chelsea 
 	help
 	  Select whether to use the toolchain provided by buildroot
 	  or an external toolchain.
