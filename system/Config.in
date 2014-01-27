@@ -180,7 +180,8 @@ if BR2_ROOTFS_SKELETON_DEFAULT
 
 config BR2_TARGET_GENERIC_ROOT_PASSWD
 	string "Root password"
-	default ""
+	default "" if BR2_arm_no_samsung
+	default "SamyGO" if !BR2_arm_no_samsung
 	help
 	  Set the initial root password (in clear). It will be md5-encrypted.
 
