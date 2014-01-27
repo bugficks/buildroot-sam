@@ -932,7 +932,7 @@ config BR2_TOOLCHAIN_EXTERNAL_CUSTOM_PREFIX
 	default "arm-v7a8-linux-gnueabi"			 if BR2_TOOLCHAIN_EXTERNAL_GENOA
 	default "arm-v7a8v2r2-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_ECHO
 	default "arm_v7_vfp_le"				 		 if BR2_TOOLCHAIN_EXTERNAL_VALENCIA
-	default "arm_v5t_le"				 		 if BR2_TOOLCHAIN_EXTERNAL_CHELSEA
+	default "arm_v6_vfp_le"				 		 if BR2_TOOLCHAIN_EXTERNAL_CHELSEA
 config BR2_TOOLCHAIN_EXTERNAL_PREFIX
 	string
 	default "arm-v7a15v3r1-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_FOXP
@@ -940,7 +940,7 @@ config BR2_TOOLCHAIN_EXTERNAL_PREFIX
 	default "arm-v7a8-linux-gnueabi"	 		 if BR2_TOOLCHAIN_EXTERNAL_GENOA
 	default "arm-v7a8v2r2-linux-gnueabi"	 if BR2_TOOLCHAIN_EXTERNAL_ECHO
 	default "arm_v7_vfp_le"				 		 if BR2_TOOLCHAIN_EXTERNAL_VALENCIA
-	default "arm_v5t_le"				 		 if BR2_TOOLCHAIN_EXTERNAL_CHELSEA
+	default "arm_v6_vfp_le"				 		 if BR2_TOOLCHAIN_EXTERNAL_CHELSEA
 	default "arm-linux-gnueabihf"	 if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_09
 	default "arm-linux-gnueabihf"	 if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_08
 	default "arm-linux-gnueabihf"	 if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_07
