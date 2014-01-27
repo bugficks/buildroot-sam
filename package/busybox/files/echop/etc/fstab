@@ -1,4 +1,0 @@
-none		/proc		proc	defaults	0 0
-none		/sys		sysfs	defaults	0 0
-none		/dev/sam	tmpfs	defaults	0 0
-none		/dtv		tmpfs	defaults	0 0

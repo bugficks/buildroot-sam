@@ -217,9 +217,9 @@ define BUSYBOX_COPY_ROOTFS_FILES
 endef
 endif
 
-ifeq ($(BR2_arm_foxp),y)
+ifeq ($(BR2_arm_foxb),y)
 define BUSYBOX_COPY_ROOTFS_FILES
-	cp -Rf package/busybox/files/foxp/* $(TARGET_DIR)
+	cp -Rf package/busybox/files/foxb/* $(TARGET_DIR)
 endef
 endif
 
