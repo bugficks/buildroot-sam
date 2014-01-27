@@ -1,0 +1,4 @@
+::sysinit:/etc/rc.local
+::respawn:/bin/cttyhack -/bin/sh
+::sysinit:/etc/rc.local
+::respawn:/bin/cttyhack -/bin/sh

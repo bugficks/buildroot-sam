@@ -1,0 +1,24 @@
+#!/bin/sh
+echo "/etc/rc.local start"
+
+####################### version ###########################
+if [ -e .version ]
+then
+        ROOTFS_VERSION=$(cat /.version)
+else
+        ROOTFS_VERSION="rootfs version file not found"
+fi
+
+echo "====================================================================="
+echo "  ROOTFS VERSION : "$ROOTFS_VERSION
+echo "====================================================================="
+
+# mount ramdisk 
+mount -t proc /proc
+mount -t sysfs /sys
+mount -t tmpfs none /dev/sam -o size=1K,mode=1777
+mount -t tmpfs none /dtv -o size=30M,mode=1777
+mount -t tmpfs none /dsm -o size=10M,mode=1777
+mount -t tmpfs none /core -o mode=1777 #for coredump
+mount -t tmpfs none /tmp -o size=20M,mode=1777
+mount -t tmpfs tmpfs /dev/shm

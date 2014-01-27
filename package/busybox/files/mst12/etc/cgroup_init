@@ -1,0 +1,92 @@
+# /etc/profile
+
+CGROUP_INIT="true"
+mount -t cgroup -o cpu none /sys/fs/cgroup
+if [ $? != 0 ]
+then
+        CGROUP_INIT="false"
+fi
+
+mkdir /sys/fs/cgroup/fg_group
+if [ $? != 0 ]
+then
+        CGROUP_INIT="false"
+fi
+
+mkdir /sys/fs/cgroup/bg_group
+if [ $? != 0 ]
+then
+        CGROUP_INIT="false"
+fi
+
+
+echo 1024 > /sys/fs/cgroup/fg_group/cpu.shares
+if [ $? != 0 ]
+then
+        CGROUP_INIT="false"
+fi
+
+echo 256 > /sys/fs/cgroup/bg_group/cpu.shares
+if [ $? != 0 ]
+then
+        CGROUP_INIT="false"
+fi
+
+echo $$ > /sys/fs/cgroup/fg_group/tasks
+if [ $? != 0 ]
+then
+        CGROUP_INIT="false"
+fi
+
+if [ "$CGROUP_INIT" = "true" ]
+then
+        echo "Cgroup Success" 
+else
+        echo "Cgroup Fail"
+fi
+# /etc/profile
+
+CGROUP_INIT="true"
+mount -t cgroup -o cpu none /sys/fs/cgroup
+if [ $? != 0 ]
+then
+        CGROUP_INIT="false"
+fi
+
+mkdir /sys/fs/cgroup/fg_group
+if [ $? != 0 ]
+then
+        CGROUP_INIT="false"
+fi
+
+mkdir /sys/fs/cgroup/bg_group
+if [ $? != 0 ]
+then
+        CGROUP_INIT="false"
+fi
+
+
+echo 1024 > /sys/fs/cgroup/fg_group/cpu.shares
+if [ $? != 0 ]
+then
+        CGROUP_INIT="false"
+fi
+
+echo 256 > /sys/fs/cgroup/bg_group/cpu.shares
+if [ $? != 0 ]
+then
+        CGROUP_INIT="false"
+fi
+
+echo $$ > /sys/fs/cgroup/fg_group/tasks
+if [ $? != 0 ]
+then
+        CGROUP_INIT="false"
+fi
+
+if [ "$CGROUP_INIT" = "true" ]
+then
+        echo "Cgroup Success" 
+else
+        echo "Cgroup Fail"
+fi

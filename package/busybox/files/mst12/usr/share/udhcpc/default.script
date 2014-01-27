@@ -1,0 +1,211 @@
+#!/bin/sh
+
+# udhcpc script edited by Tim Riker <Tim@Rikers.org>
+
+[ -z "$1" ] && echo "Error: should be called from udhcpc" && exit 1
+
+RESOLV_CONF="/etc/resolv.conf"
+[ -n "$broadcast" ] && BROADCAST="broadcast $broadcast"
+[ -n "$subnet" ] && NETMASK="netmask $subnet"
+
+generate_rand_num1()
+{
+    RAND_NUM=`hexdump -n1 -e\"%u\" /dev/urandom`
+    RAND_NUM=`expr $RAND_NUM % 254 + 1`
+}
+
+generate_rand_num2()
+{
+    RAND_NUM=`hexdump -n1 -e\"%u\" /dev/urandom`
+    RAND_NUM=`expr $RAND_NUM % 255`
+}
+
+exec_autoip()
+{
+    AUTOIP_SUBNET="169.254"
+
+    if [ -f /mtd_epg/ifcfg-$interface-auto ]
+    then
+        . /mtd_epg/ifcfg-$interface-auto
+    else
+        generate_rand_num1
+        ADDR1=$RAND_NUM
+        generate_rand_num2
+        ADDR2=$RAND_NUM
+    fi
+
+    LOOP_CNT=1
+    AUTOIP_SUBNET_MASK="netmask 255.255.0.0"
+    AUTOIP_BROADCAST="broadcast 169.254.255.255"
+    ADDR_SET=false
+    while [ $ADDR_SET = "false" ]
+    do
+      arping -D -c 3 -I $interface $AUTOIP_SUBNET.$ADDR1.$ADDR2
+      if [ $? = 0 ]
+      then
+          ETH_UP=`ifconfig $interface | grep -c RUNNING`
+          if [ $ETH_UP = 0 ]
+          then
+              echo "$interface is not up and running, no more auto ip setting process"
+              return 
+          else
+              echo "ifconfig $interface $AUTOIP_SUBNET.$ADDR1.$ADDR2 $AUTOIP_BROADCAST $AUTOIP_SUBNET_MASK"
+		ifconfig $interface $AUTOIP_SUBNET.$ADDR1.$ADDR2 $AUTOIP_BROADCAST $AUTOIP_SUBNET_MASK
+                          
+              ADDR_SET=true
+          fi
+      else
+#
+#         two cases:
+#           1. arping IP duplication detected
+#           2. network interface is down
+#
+          if [ $LOOP_CNT -ge 20 ]
+          then
+              echo "tried maximum number of arping -D without success"
+              return
+          else
+              LOOP_CNT=`expr $LOOP_CNT + 1`   
+              generate_rand_num1
+              ADDR1=$RAND_NUM
+              generate_rand_num2
+              ADDR2=$RAND_NUM
+          fi
+      fi
+    done
+    
+    arping -U -c 2 -I $interface $AUTOIP_SUBNET.$ADDR1.$ADDR2 &
+
+#
+#   echo "route add default gw $AUTOIP_SUBNET.$ADDR1.$ADDR2 dev $interface"
+#   route add default gw $AUTOIP_SUBNET.$ADDR1.$ADDR2 dev $interface
+#
+    echo "route add -net 0.0.0.0 netmask 0.0.0.0 $interface"
+    route add -net 0.0.0.0 netmask 0.0.0.0 $interface
+
+    echo "ADDR1=$ADDR1" >  /mtd_epg/ifcfg-$interface-auto
+    echo "ADDR2=$ADDR2" >> /mtd_epg/ifcfg-$interface-auto
+    sync
+}
+
+try_autoip()
+{
+#AUTO IP check
+    ETHX_AUTO_IP=`ifconfig $interface | grep -c 169.254`
+    [ $ETHX_AUTO_IP = "0" ] && exec_autoip
+}
+
+case "$1" in
+        leasefail)
+                echo "processing local leasefail"
+                try_autoip;                
+                DEVICE=`echo $interface | sed 's/bcm.*/bcm/g'`
+                echo "DEVICE = " $DEVICE
+                if [ "$DEVICE" = "bcm" ]
+                then
+                     echo "AUTO IP : 169.254."$ADDR1"."$ADDR2 >> /mtd_rwarea/wlan_autoip_done
+                fi
+                DEVICE=`echo $interface | sed 's/ra.*/ra/g'`
+                if [ "$DEVICE" = "ra" ]
+                then
+                     echo "AUTO IP : 169.254."$ADDR1"."$ADDR2 >> /mtd_rwarea/wlan_autoip_done
+                fi
+               DEVICE=`echo $interface | sed 's/apcli.*/apcli/g'`
+                if [ "$DEVICE" = "apcli" ]
+                then
+                     echo "AUTO IP : 169.254."$ADDR1"."$ADDR2 >> /mtd_rwarea/wlan_autoip_done
+                fi
+               DEVICE=`echo $interface | sed 's/ath.*/ath/g'`
+                if [ "$DEVICE" = "ath" ]
+                then
+                     echo "AUTO IP : 169.254."$ADDR1"."$ADDR2 >> /mtd_rwarea/wlan_autoip_done
+                fi
+	       DEVICE=`echo $interface | sed 's/wlan.*/wlan/g'`
+	        if [ "$DEVICE" = "wlan" ]
+		then
+		     echo "AUTO IP : 169.254."$ADDR1"."$ADDR2 >> /mtd_rwarea/wlan_autoip_done
+                fi
+                ;;
+
+        bound)	
+		ETH_UP=`ifconfig $interface | grep -c RUNNING`
+		if [ $ETH_UP = "1" ]
+		then
+ 			/sbin/ifconfig $interface inet $ip $NETMASK 
+#	                /sbin/ifconfig $interface $ip $BROADCAST $NETMASK
+
+        	        if [ -n "$router" ] ; then
+                	        echo "deleting routers"
+                        	while route del default gw 0.0.0.0 dev $interface ; do
+                                	:
+                        	done
+
+                        	route add -net 169.254.0.0 netmask 255.255.0.0 dev $interface
+
+                        	for i in $router ; do
+                                	route add default gw $i dev $interface
+                        	done
+                	fi
+
+					if [ -n "$ntpsrv" ]; then 
+							echo "$ntpsrv" > /mtd_rwarea/ntp_server
+					fi
+					
+                	echo -n > $RESOLV_CONF
+                	for i in $dns ; do
+                        	echo adding dns $i
+                        	echo nameserver $i >> $RESOLV_CONF
+                	done
+			#Add option for DNS service look up
+                    	echo options timeout:3 attempts:1 >> $RESOLV_CONF
+
+			if [ -n "$serverid" ]; then
+				echo $serverid > /mtd_rwarea/wfd_rtspsource
+				echo $ip >> /mtd_rwarea/wfd_rtspsource
+			fi			
+			
+			#hongyabi add for checking dhcp done
+			DEVICE=`echo $interface | sed 's/bcm.*/bcm/g'`
+			echo "DEVICE = " $DEVICE
+			if [ "$DEVICE" = "bcm" ]
+			then
+				echo "dhcp done : " $interface >> /mtd_rwarea/wlan_dhcp_done
+			fi
+			DEVICE=`echo $interface | sed 's/ra.*/ra/g'`
+			echo "DEVICE = " $DEVICE
+			if [ "$DEVICE" = "ra" ]
+			then
+				echo "dhcp done : " $interface >> /mtd_rwarea/wlan_dhcp_done
+			fi
+                        DEVICE=`echo $interface | sed 's/apcli.*/apcli/g'`
+                        echo "DEVICE = " $DEVICE
+                        if [ "$DEVICE" = "apcli" ]
+                        then
+                                echo "dhcp done : " $interface >> /mtd_rwarea/wlan_dhcp_done
+                        fi
+			DEVICE=`echo $interface | sed 's/ath.*/ath/g'`
+			echo "DEVICE = " $DEVICE
+			if [ "$DEVICE" = "ath" ]
+			then
+				echo "dhcp done : " $interface >> /mtd_rwarea/wlan_dhcp_done
+			fi
+			DEVICE=`echo $interface | sed 's/wlan.*/wlan/g'`
+			echo "DEVICE = " $DEVICE
+			if [ "$DEVICE" = "wlan" ]
+			then
+				echo "dhcp done : " $interface >> /mtd_rwarea/wlan_dhcp_done
+			fi
+			DEVICE=`echo $interface | sed 's/eth.*/eth/g'`
+			echo "DEVICE = " $DEVICE
+			if [ "$DEVICE" = "eth" ]
+			then
+				echo "dhcp done : " $interface >> /mtd_rwarea/ethernet_dhcp_done
+			fi
+		else
+			echo $interface "already down"
+		fi
+                ;;
+esac
+
+exit 0
+

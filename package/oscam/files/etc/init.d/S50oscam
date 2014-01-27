@@ -1,0 +1,62 @@
+#!/bin/sh
+
+OSCAM=oscam-r9003-samygo
+DIR_OSCAM=/mtd_rwcommon/oscam
+BIN_OSCAM=${DIR_OSCAM}/${OSCAM}
+LIB_OSCAM=${DIR_OSCAM}/libOSCAM.so
+BIN_SAMYGOSO=${DIR_OSCAM}/samyGOso
+BIN_NTPCLIENT=${DIR_OSCAM}/ntpclient
+
+PATH=$PATH:./
+
+if [ ! -f ${LIB_OSCAM} ]; then
+    echo "${LIB_OSCAM} doesn't exist." 
+    exit 1
+fi
+if [ -e ${LIB_OSCAM}.disabled ]; then
+    echo "***** Disabled due to previous crash."
+    echo "***** Remove ${LIB_OSCAM}.disabled first and try again."
+    exit 1
+fi
+
+chmod +x ${BIN_OSCAM} ${BIN_SAMYGOSO} ${BIN_NTPCLIENT} > /dev/null
+
+if [ "$(pidof ntpclient)" == "" ]; then
+    ${DIR_OSCAM}/ntpclient -s -h pool.ntp.org &> /dev/null
+    ${DIR_OSCAM}/ntpclient -h pool.ntp.org &> /dev/null &
+else
+    echo ntpclient already running.
+fi
+
+
+INJPID=$(pidof exeTV || pidof exeDSP)
+if [ "$INJPID" == "" ]; then
+    echo "Process not found." 
+    exit 1
+fi
+
+X=$(grep -c OSCAM /proc/$INJPID/smaps) &> /dev/null
+if [ $X -gt 0 ]; then
+    echo libOSCAM already injected!
+else    
+    #echo Injecting ${LIB_OSCAM} into pid $INJPID
+    ${BIN_SAMYGOSO} -p $INJPID -l ${LIB_OSCAM} -r
+fi
+
+if [ "$(pidof ${OSCAM})" == "" ]; then
+    echo Starting oscam
+    ${BIN_OSCAM} -c ${DIR_OSCAM} -t ${DIR_OSCAM} &
+else
+    echo oscam already running.
+fi
+
+if [ $X -le 0 ]; then
+    echo Checking pid $INJPID for crash.
+    sleep 15
+fi
+
+if [ ! -e /proc/$INJPID ]; then
+    echo "***** Process crash detected."
+    echo "***** Disabling libOSCAM."
+    touch ${LIB_OSCAM}.disabled
+fi    
