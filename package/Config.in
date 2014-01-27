@@ -1009,7 +1009,7 @@ endmenu
 
 if !BR2_arm_no_samsung
 menu "SamyGO tools"
-source "package/SamyGO/oscam/Config.in"
+source "package/oscam/Config.in"
 endmenu
 endif
 
