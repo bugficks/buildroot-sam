@@ -1,0 +1,6 @@
+config BR2_PACKAGE_NTPCLIENT
+ bool "ntpclient" 
+ default y if !BR2_arm_no_samsung
+ help 
+
+  http://doolittle.icarus.com/ntpclient/
