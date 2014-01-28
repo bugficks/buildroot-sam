@@ -3,7 +3,6 @@ config BR2_PACKAGE_SAMBA
 	depends on BR2_TOOLCHAIN_HAS_THREADS
 	depends on BR2_USE_MMU # fork()
 	select BR2_PACKAGE_POPT
-	select BR2_PACKAGE_LIBTIRPC
 	help
 	  Provides print services to all manner of SMB/CIFS clients,
 	  including the numerous versions of Microsoft Windows
@@ -86,6 +85,7 @@ config BR2_PACKAGE_SAMBA_NTLM_AUTH
 
 config BR2_PACKAGE_SAMBA_PDBEDIT
 	bool "pdbedit"
+	default y
 	help
 	  Manage the SAM database (Database of Samba Users)
 
@@ -207,6 +207,7 @@ config BR2_PACKAGE_SAMBA_TDB
 
 config BR2_PACKAGE_SAMBA_TESTPARM
 	bool "testparm"
+	default y
 	help
 	  Check an smb.conf configuration file for internal correctness
 

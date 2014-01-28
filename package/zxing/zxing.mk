@@ -4,10 +4,10 @@
 #
 ################################################################################
 
-ZXING_VERSION = 2.0
+ZXING_VERSION = 2.3.0
 ZXING_SITE = http://zxing.googlecode.com/files
 ZXING_SOURCE = ZXing-$(ZXING_VERSION).zip
-ZXING_LICENSE = Apache v2.0
+ZXING_LICENSE = Apache-2.0
 ZXING_LICENSE_FILES = COPYING
 ZXING_INSTALL_STAGING = YES
 
@@ -27,16 +27,8 @@ define ZXING_INSTALL_STAGING_CMDS
 	$(MAKE) -C $(@D)/cpp/core/src DESTDIR=$(STAGING_DIR) install
 endef
 
-define ZXING_UNINSTALL_STAGING_CMDS
-	$(MAKE) -C $(@D)/cpp/core/src DESTDIR=$(STAGING_DIR) uninstall
-endef
-
 define ZXING_INSTALL_TARGET_CMDS
 	$(MAKE) -C $(@D)/cpp/core/src DESTDIR=$(TARGET_DIR) install
-endef
-
-define ZXING_UNINSTALL_TARGET_CMDS
-	$(MAKE) -C $(@D)/cpp/core/src DESTDIR=$(TARGET_DIR) uninstall
 endef
 
 $(eval $(generic-package))

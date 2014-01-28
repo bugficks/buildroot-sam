@@ -3,7 +3,6 @@ config BR2_PACKAGE_MC
  select BR2_PACKAGE_NCURSES 
  select BR2_PACKAGE_LIBGLIB2
  select BR2_PACKAGE_SLANG2
- default y if !BR2_arm_no_samsung
  help 
   GNU Midnight Commander is a visual file manager, licensed under 
   GNU General Public License and therefore qualifies as Free Software. 

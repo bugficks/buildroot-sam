@@ -11,7 +11,7 @@ NETSNMP_LICENSE = Various BSD-like
 NETSNMP_LICENSE_FILES = COPYING
 NETSNMP_INSTALL_STAGING = YES
 NETSNMP_CONF_ENV = ac_cv_NETSNMP_CAN_USE_SYSCTL=yes
-NETSNMP_CONF_OPT = --with-persistent-directory=/var/lib/snmp --disable-static \
+NETSNMP_CONF_OPT = --with-persistent-directory=/var/lib/snmp \
 		--with-defaults --enable-mini-agent --without-rpm \
 		--with-logfile=none --without-kmem-usage $(DISABLE_IPV6) \
 		--enable-as-needed --without-perl-modules \
@@ -73,13 +73,6 @@ define NETSNMP_INSTALL_TARGET_CMDS
 		rm -f $(TARGET_DIR)/usr/share/snmp/mibs/$$mib-MIB.txt; \
 	done
 	$(NETSNMP_REMOVE_MIBS_IPV6)
-endef
-
-define NETSNMP_UNINSTALL_TARGET_CMDS
-	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) \
-		DESTDIR=$(TARGET_DIR) uninstall
-	rm -f $(TARGET_DIR)/etc/init.d/S59snmpd
-	rm -f $(TARGET_DIR)/usr/lib/libnetsnmp*
 endef
 
 define NETSNMP_STAGING_NETSNMP_CONFIG_FIXUP

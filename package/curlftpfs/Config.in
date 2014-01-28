@@ -11,7 +11,6 @@ config BR2_PACKAGE_CURLFTPFS
 	depends on BR2_TOOLCHAIN_HAS_THREADS # libfuse, glib2
 	depends on BR2_USE_MMU # libfuse, glib2
 	depends on !BR2_PREFER_STATIC_LIB # libfuse
-	default y if !BR2_arm_no_samsung
 	help
 	  CurlFtpFS is a filesystem for accessing FTP hosts based on FUSE
 	  and libcurl.

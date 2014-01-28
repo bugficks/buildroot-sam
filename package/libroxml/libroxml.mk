@@ -13,23 +13,11 @@ define LIBROXML_BUILD_CMDS
 endef
 
 define LIBROXML_INSTALL_STAGING_CMDS
-	$(MAKE) DESTDIR=$(STAGING_DIR) -C $(@D) install
+	$(MAKE) DESTDIR=$(STAGING_DIR)/usr/ -C $(@D) install
 endef
 
 define LIBROXML_INSTALL_TARGET_CMDS
 	$(MAKE) DESTDIR=$(TARGET_DIR)/usr/ -C $(@D) install
-endef
-
-define LIBROXML_UNINSTALL_STAGING_CMDS
-	$(MAKE) DESTDIR=$(STAGING_DIR) -C $(@D) uninstall
-endef
-
-define LIBROXML_UNINSTALL_TARGET_CMDS
-	$(MAKE) DESTDIR=$(TARGET_DIR) -C $(@D) uninstall
-endef
-
-define LIBROXML_CLEAN_CMDS
-	-$(MAKE) -C $(@D) clean
 endef
 
 define LIBROXML_DISABLE_DOXYGEN

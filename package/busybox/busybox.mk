@@ -5,7 +5,6 @@
 ################################################################################
 
 ifeq ($(BR2_PACKAGE_BUSYBOX_SNAPSHOT),y)
-
 BUSYBOX_VERSION = snapshot
 BUSYBOX_SITE = http://www.busybox.net/downloads/snapshots
 else
@@ -13,8 +12,6 @@ BUSYBOX_VERSION = $(call qstrip,$(BR2_BUSYBOX_VERSION))
 BUSYBOX_SITE = http://www.busybox.net/downloads
 endif
 BUSYBOX_SOURCE = busybox-$(BUSYBOX_VERSION).tar.bz2
-
-
 ifeq ($(BR2_BUSYBOX_VERSION_1_18_1_SAM),y)
 BUSYBOX_VERSION = $(call qstrip,$(BR2_BUSYBOX_VERSION))
 BUSYBOX_SITE = http://www.samygo.tv/juzis28/buildroot/busybox_echop
@@ -26,7 +23,6 @@ BUSYBOX_VERSION = $(call qstrip,$(BR2_BUSYBOX_VERSION))
 BUSYBOX_SITE = http://www.samygo.tv/juzis28/buildroot/busybox_echop
 BUSYBOX_SOURCE = busybox-1.19.4.tgz
 endif
-
 
 BUSYBOX_LICENSE = GPLv2
 BUSYBOX_LICENSE_FILES = LICENSE
@@ -252,14 +248,6 @@ define BUSYBOX_INSTALL_TARGET_CMDS
 	$(BUSYBOX_INSTALL_LOGGING_SCRIPT)
 	$(BUSYBOX_INSTALL_WATCHDOG_SCRIPT)
 	$(BUSYBOX_COPY_ROOTFS_FILES)
-endef
-
-define BUSYBOX_UNINSTALL_TARGET_CMDS
-	$(BUSYBOX_MAKE_ENV) $(MAKE) $(BUSYBOX_MAKE_OPTS) -C $(@D) uninstall
-endef
-
-define BUSYBOX_CLEAN_CMDS
-	$(BUSYBOX_MAKE_ENV) $(MAKE) $(BUSYBOX_MAKE_OPTS) -C $(@D) clean
 endef
 
 $(eval $(generic-package))

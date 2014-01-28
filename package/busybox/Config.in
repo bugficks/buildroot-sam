@@ -36,6 +36,7 @@ choice
 
 	config BR2_BUSYBOX_VERSION_1_21_X
 		bool "BusyBox 1.21.x"
+
 	config BR2_BUSYBOX_VERSION_1_22_X
 		bool "BusyBox 1.22.x"
 

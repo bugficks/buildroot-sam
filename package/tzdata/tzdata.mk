@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-TZDATA_VERSION = 2013h
+TZDATA_VERSION = 2013i
 TZDATA_SOURCE = tzdata$(TZDATA_VERSION).tar.gz
 TZDATA_SITE = ftp://ftp.iana.org/tz/releases
 TZDATA_DEPENDENCIES = host-zic
@@ -39,8 +39,14 @@ define TZDATA_INSTALL_TARGET_CMDS
 	cp -a $(@D)/_output/* $(TARGET_DIR)/usr/share/zoneinfo
 	cd $(TARGET_DIR)/usr/share/zoneinfo;    \
 	for zone in posix/*; do                 \
-	    ln -sfn "$${zone}" "$${zone##*/}";    \
+	    ln -sfn "$${zone}" "$${zone##*/}";  \
 	done
+	if [ -n "$(BR2_PACKAGE_TZDATA_LOCALTIME)" ]; then                   \
+	    cd $(TARGET_DIR)/etc;                                           \
+	    ln -sf ../usr/share/zoneinfo/$(BR2_PACKAGE_TZDATA_LOCALTIME)    \
+	           localtime;                                               \
+	    echo "$(BR2_PACKAGE_TZDATA_LOCALTIME)" >timezone;               \
+	fi
 endef
 
 $(eval $(generic-package))

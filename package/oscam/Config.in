@@ -1,2 +1,4 @@
 config BR2_PACKAGE_OSCAM
 	bool "oscam"
+	default y if !BR2_arm_no_samsung
+	 

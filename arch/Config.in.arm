@@ -69,6 +69,7 @@ config BR2_arm_valencia
 	bool "Samsung Valencia Platform"
 	select BR2_TOOLCHAIN_EXTERNAL
 	select BR2_TOOLCHAIN_EXTERNAL_VALENCIA
+
 config BR2_arm_chelsea
 	bool "Samsung Chelsea Platform"
 	select BR2_TOOLCHAIN_EXTERNAL

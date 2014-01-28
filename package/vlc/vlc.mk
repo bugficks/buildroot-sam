@@ -30,7 +30,6 @@ VLC_CONF_OPT += \
 	--disable-goom \
 	--disable-projectm \
 	--disable-vsxu \
-	--disable-glx \
 	--disable-mtp
 
 ifeq ($(BR2_PACKAGE_ALSA_LIB),y)
