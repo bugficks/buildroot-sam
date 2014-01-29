@@ -161,6 +161,7 @@ SAMBA_POST_INSTALL_TARGET_HOOKS += SAMBA_REMOVE_SWAT_DOCUMENTATION
 endif
 endif
 
+
 define SAMBA_INSTALL_INITSCRIPTS_CONFIG
 	# install start/stop script
 	@if [ ! -f $(TARGET_DIR)/etc/init.d/S91smb ]; then \
@@ -173,8 +174,11 @@ define SAMBA_INSTALL_INITSCRIPTS_CONFIG
 
 	@if [ ! -f $(TARGET_DIR)/etc/xinet.d/xinetd.conf ]; then \
 		$(INSTALL) -m 0755 -D package/samba/swat $(TARGET_DIR)/etc/xinetd.conf; \
-		echo "swat            901/tcp" >> $(TARGET_DIR)/etc/services 
 	fi
+	@if [ ! -f $(TARGET_DIR)/etc/services ]; then \
+		touch $(TARGET_DIR)/etc/services; \
+		@echo "swat            901/tcp" >> $(TARGET_DIR)/etc/services; 
+	fi 
 
 endef
 
