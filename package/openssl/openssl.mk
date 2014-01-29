@@ -34,7 +34,7 @@ endif
 
 # Some architectures are optimized in OpenSSL
 ifeq ($(ARCH),arm)
-	OPENSSL_TARGET_ARCH = armv4
+	OPENSSL_TARGET_ARCH = generic32
 endif
 ifeq ($(ARCH),powerpc)
 # 4xx cores seem to have trouble with openssl's ASM optimizations

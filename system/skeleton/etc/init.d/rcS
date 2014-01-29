@@ -4,6 +4,13 @@
 # Start all init scripts in /etc/init.d
 # executing them in numerical order.
 #
+mount -t tmpfs none /var -o size=10M,mode=1777
+mkdir /var/empty
+mkdir /var/log
+mkdir /var/lock
+mkdir /var/run
+mkdir /var/spool
+mkdir /var/cache
 for i in /etc/init.d/S??* ;do
 
      # Ignore dangling symlinks (if any).

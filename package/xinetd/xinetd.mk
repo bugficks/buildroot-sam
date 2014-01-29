@@ -30,4 +30,11 @@ XINETD_CONF_ENV += \
 
 XINETD_MAKE_OPT = AR="$(TARGET_AR)"
 
+define XINETD_INSTALL_INITSCRIPTS_CONFIG
+	# install start/stop script
+	@if [ ! -f $(TARGET_DIR)/etc/init.d/S41xinetd ]; then \
+		$(INSTALL) -m 0755 -D package/xinetd/S41xinetd $(TARGET_DIR)/etc/init.d/S41xinetd; \
+	fi
+endef
+XINETD_POST_INSTALL_TARGET_HOOKS += XINETD_INSTALL_INITSCRIPTS_CONFIG
 $(eval $(autotools-package))
