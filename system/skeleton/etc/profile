@@ -1,12 +1,6 @@
 # ~/.bashrc: executed by bash(1) for non-login interactive shells.
 
-export PATH=\
-/bin:\
-/sbin:\
-/usr/bin:\
-/usr/sbin:\
-/usr/bin/X11:\
-/usr/local/bin
+
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/mtd_cmmlib/lib:/mtd_cmmlib/Comp_LIB:/mtd_exe/lib:/mtd_cmmlib/YWidget_LIB:/mtd_contents:/mtd_cmmlib/InfoLink/lib/plugin/Static:/mtd_appdata/moip:/mtd_cmmlib/GAME_LIB:/mtd_appdata/gemstar:/mtd_cmmlib/DRM_LIB:/Java/lib:/mtd_cmmlib/InfoLink/lib:/dtv:/mtd_appext/WidgetEngine:/mtd_rocommon/Webkit:/mtd_appext/Webkit:/mtd_exe/WebServerApp/bin
 export DISPLAY=:0
@@ -16,6 +10,7 @@ export FONTCONFIG_FILE=/mtd_rocommon/FullBrowser/fonts/fonts.conf
 export PANGO_RC_FILE=/mtd_appdata/Runtime/pango/pangorc
 #export GTK_PATH=/mtd_appdata/Runtime/lib/gtk-3.0
 export PATH=$PATH:/mtd_appdata/Runtime/bin
+
 # If running interactively, then:
 if [ "$PS1" ]; then
 
@@ -41,6 +36,9 @@ if [ "$PS1" ]; then
     export EDITOR='/bin/vi'
     export INPUTRC=/etc/inputrc
     export DMALLOC_OPTIONS=debug=0x34f47d83,inter=100,log=logfile
+
+	 export MC_HOME='/mtd_down'
+	 export HISTFILE='/mtd_down/.ash_history'
 
     ### Some aliases
     alias ps2='ps facux '

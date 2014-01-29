@@ -11,6 +11,7 @@ mkdir /var/lock
 mkdir /var/run
 mkdir /var/spool
 mkdir /var/cache
+
 for i in /etc/init.d/S??* ;do
 
      # Ignore dangling symlinks (if any).
