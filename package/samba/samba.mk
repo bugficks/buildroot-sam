@@ -173,6 +173,7 @@ define SAMBA_INSTALL_INITSCRIPTS_CONFIG
 
 	@if [ ! -f $(TARGET_DIR)/etc/xinet.d/xinetd.conf ]; then \
 		$(INSTALL) -m 0755 -D package/samba/swat $(TARGET_DIR)/etc/xinetd.conf; \
+		echo "swat            901/tcp" >> $(TARGET_DIR)/etc/services 
 	fi
 
 endef

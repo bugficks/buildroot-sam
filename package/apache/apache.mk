@@ -46,6 +46,7 @@ define APACHE_INSTALL_INITSCRIPTS_CONFIG
 	# install start/stop script
 	@if [ ! -f $(TARGET_DIR)/etc/init.d/S91apache2 ]; then \
 		$(INSTALL) -m 0755 -D package/apache/S91apache2 $(TARGET_DIR)/etc/init.d/S91apache2; \
+		$(INSTALL) -m 0755 -D package/apache/httpd.conf $(TARGET_DIR)/etc/httpd.conf; \
 	fi
 
 	fi
