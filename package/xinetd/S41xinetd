@@ -1,0 +1,45 @@
+#!/bin/sh
+ ########################################################################
+ # Begin $rc_base/init.d/xinetd
+ # /sbin/rc.d/init.d/xinetd
+ #
+ # Description : Xinetd superserver start stop script
+ #
+ # Authors : Mohamed Thalib H <hmthalib
+ #
+ # Version : 00.00
+ #
+ # Notes :
+ #
+ ########################################################################
+ 
+ 
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+ PROG=/usr/sbin/xinetd
+ MYPIDFILE=/var/run/xinetd.pid
+ 
+if [ ! -x $PROG ]; then
+ exit 0
+ fi
+ 
+case "$1" in
+  start)
+	echo -n "Starting $PROG: "
+	set -a
+	$PROG -filelog /var/log/xinetd.log -pidfile $MYPIDFILE
+	echo "OK"
+	;;
+  stop)
+
+	;;
+  restart|force-reload)
+
+	echo ""
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart|force-reload}" >&2
+	exit 1
+	;;
+esac
+ 
+# End /etc/rc.d/init.d/xinetd

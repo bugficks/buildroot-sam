@@ -1,0 +1,4 @@
+config BR2_PACKAGE_APACHE
+	bool "apache"
+	help
+	  Apache SW.
